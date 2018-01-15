@@ -1,0 +1,14 @@
+
+
+# Install IOZONE
+
+yum install -y wget
+http://www.iozone.org/src/current/iozone3_394.tar
+tar xvf iozone3_394.tar
+cd iozone3_394/src/current
+make
+make linux
+
+# Install Bonnie++, stress, and stress-ng
+sudo yum install -y epel-release
+sudo yum install -y bonnie++ stress stress-ng

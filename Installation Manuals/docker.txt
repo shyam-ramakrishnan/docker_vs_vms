@@ -1,0 +1,16 @@
+
+# Install Docker Engine
+
+yum install -y docker
+
+# Run CentOS image container
+
+docker run -it centos /bin/bash
+
+# Commit and push changes to a private repository
+
+docker commit -m "[build_notes]" -a "creator info" <container name or ID> <name of image>:<version tag>
+
+docker tag <tag name> <path to the private repository>
+
+docker push <path to the private repository>

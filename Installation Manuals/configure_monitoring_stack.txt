@@ -1,0 +1,103 @@
+
+# Install CollectD on Client and Server machines
+
+yum install -y epel-release
+yum install -y collectd
+
+# Edit the /etc/collectd.conf file on client machines to have the followinglines
+
+LoadPlugin network
+LoadPlugin rrd tool
+LoadPlugin cpu
+LoadPlugin memory
+LoadPlugin load
+<Plugin network>
+	Server "InfluxDB Server IP" "3030"
+	Server "CollectD Server IP" "25826"
+</Plugin>
+
+# Edit the /etc/collectd.conf file on server machines to have the following
+lines
+
+LoadPlugin network
+<Plugin network>
+	Listen "0.0.0.0" "25826"
+</Plugin>
+
+# Start the CollectD service
+
+systemctl start collectd.service
+systemctl enable collectd.service
+
+
+# Install InfluxDB
+
+# Add repository for InfluxDB
+
+cat <<EOF j sudo tee/etc/yum.repos.d/influxdb.repo
+[influxdb]
+name = InfluxDBRepository - RHEL\$releasever
+baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
+enabled = 1
+gpgcheck = 1
+gpgkey = https://repos.influxdata.com/influxdb.key
+EOF
+
+# Install Packages
+
+yum install -y influxdb
+
+# Edit the influxdb configuration files near the [[collectd]] heading as follows:
+
+[[collect]]
+enable = true
+bind-address = "127:0.0.1:3030"
+database = "collectd"
+typesdb = "/use/share/collectd/types.db"
+
+# start the influxdb daemon
+
+systemctl start influxdb.service
+
+
+# Grafana Configuration
+
+sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.6.2-1.x86_64.rpm
+
+# Start Grafana service
+
+systemctl start grafana-server.service
+systemctl enable grafana-server.service
+
+# Start a web browser and navigate to "http://localhost:3000". Login with user-name "admin" and password "admin"
+
+# Add InfluxDB as a data source to Grafana
+# Add a new graph to the dashboard
+# Select the metrics and the hosts to view the metrics in a graphical format
+
+
+
+
+# CollectD-Web setup
+
+# Install dependencies
+
+yum install -y git
+yum install -y rrdtool rrdtool-devel rrdtool-perl perl-HTML-Parser perl-JSON perl-CGI
+
+# Configurations
+
+cd /usr/local/
+git clone https://github.com/httpdss/collectd-web.git
+cd collectd-web/
+ls
+chmod +x cgi-bin/graphdefs.cgi
+nano runserver.py
+
+#  Change the IP address to the IP address of the client or "0.0.0.0" for multiple clients
+
+# Create a directory "collectd" in /etc/. Create the file "collection.conf" and add the following line in it:
+
+DataDir: "/var/lib/collectd/rrd/"
+
+# Start a web browser and navigate to "http://localhost:8888"
