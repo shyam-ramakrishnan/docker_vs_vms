@@ -38,7 +38,7 @@ This folder includes all the documentations used in fullfilment of the course pr
     2_bonnie.py  
     3_stress1.py  
     4_stress2.py  
-    [found here](https://github.ncsu.edu/engr-csc-547/2017-fall-team-01/tree/master/Virtual%20Machine%20Scripts)
+    [found here](/Virtual%20Machine%20Scripts)
   * Install python package dependency on the host servers:  
     `yum install -y python-pip`  
     `pip install paramiko`  
