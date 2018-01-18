@@ -1,4 +1,4 @@
-# Docker Container Vs Virtual Machines  
+# Virtual Machines vs Docker Container
 ###  CSC-547 Project
 
 ### About
