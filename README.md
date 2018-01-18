@@ -3,8 +3,10 @@
 
 ### About
 
-We compare Virtual Machines and Docker Containers based on various metrics like memory utilization, CPU performance, Disk I/O, and system load.
-
+We compare Virtual Machines and Docker Containers based on various metrics like memory utilization, CPU performance, Disk I/O, and system load.  
+  
+  ![docker v vm](https://user-images.githubusercontent.com/20236768/35098373-dac26262-fc21-11e7-8342-e284d8f1145c.jpg)
+  
 ### Description
 
 #### /Installation Manuals:
